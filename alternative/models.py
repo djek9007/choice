@@ -6,11 +6,19 @@ from publishingHouse.models import PublishingHouse, Subject, ClassRoom, YearPubl
 
 
 class Alternative(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    publishingHouse = models.ForeignKey(PublishingHouse, verbose_name='Издательство', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    publishingHouse = models.ForeignKey(PublishingHouse, verbose_name='Издательство', on_delete=models.CASCADE, related_name='publishingHouse')
     subject = models.ForeignKey(Subject, verbose_name='Предмет', on_delete=models.CASCADE)
     classroom = models.ForeignKey(ClassRoom, verbose_name='Класс', on_delete=models.CASCADE)
     yearPublishing = models.ForeignKey(YearPublising, verbose_name='Год издание', on_delete=models.CASCADE)
+    created_date = models.DateTimeField("Дата создания", auto_now_add=True, blank=True, null=True)
+    edit_date = models.DateTimeField(
+        "Дата редактирования",
+        auto_now_add=True,
+        blank=True,
+        null=True
+    )
+    published = models.BooleanField("Опубликовать?", default=True)
 
     def __unicode__(self):
         return self.user

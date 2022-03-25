@@ -1,14 +1,9 @@
+from django.forms import  ModelForm
 
-from django import forms
-
-
-from .models import Organization
+from organizations.models import Organization
 
 
-
-class OrganizationForm(forms.ModelForm):
-
+class  OrganizationForm(ModelForm):
     class Meta:
         model = Organization
-        fields = ('region', 'district', 'locality', 'territoriAlaffiliation', 'language', 'name',)
-
+        fields = "__all__"
