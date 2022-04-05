@@ -1,51 +1,65 @@
-from django.shortcuts import render
 from rest_framework import viewsets
-from rest_framework.response import Response
-# Create your views here.
-from django.views.generic.base import View
-from rest_framework.views import APIView
 
-# from .forms import OrganizationForm
+
+from .models import Organization
+from .serializers import OrganizationSerializer
+
+
+class OrganizationsViewSet(viewsets.ModelViewSet):
+    """Модель Организации"""
+    serializer_class = OrganizationSerializer
+    queryset = Organization.objects.filter(published=True)
+
+
+# class OrganizationListView(generics.ListAPIView):
+#     """Вывод всех выбранных учебников"""
+
+
+
 #
 #
+# class OrganizationCreateView(generics.CreateAPIView):
+#     """Добавление выбранного алтернативного учебника"""
+#     serializer_class = OrganizationCreateSerializers
 #
 #
+# class OrganizationDetailView(generics.RetrieveUpdateDestroyAPIView):
+#     """Вывод одного выбранного учебника, редактирование, удаление"""
+#     serializer_class = OrganizationDetailSerializer
+#
+#     def get_queryset(self):
+#         """Форма запроса из базы"""
+#         organization = Organization.objects.filter(published=True)
+#         return organization
 #
 #
+# def load_distict(request):
+#     region_id = request.GET.get('region')
+#     district = Organization.objects.filter(district_id=region_id).order_by('name')
+#     return render(request, 'hr/region_dropdown_list.html', {'region': district})
 #
-from organizations.forms import OrganizationForm
+# class OrganizationView(View):
+#     """Вывод категории и вывод стати"""
+#
+#     # запрос к базе по полю публикации на true
+#     def get_queryset(self):
+#         return Organization.objects.filter(published=True)
+#
+#     def get(self, request):
+#         organizations = self.get_queryset()
+#         form = OrganizationForm
+#
+#         context = {
+#
+#             'organizations': organizations,
+#             'form':form,
+#         }
+#         return render(request, 'organizations/organization.html', context)
+#
+#     def post(self, request, **kwargs):
+#         form = OrganizationForm(request.POST)
+#         if form.is_valid():
+#             form = form.save(commit=False)
+#             form.save()
+#         return redirect(request.path)
 
-
-class OrganizationsView(View):
-    def get(self, request):
-        form = OrganizationForm
-
-        contex = {
-            'form': form,
-        }
-        return render(request, 'organizations/create.html', contex)
-
-
-from organizations.models import Organization
-from organizations.serializers import OrganizationSerializer, OrganizationDetailSerializer, OrganizationCreateSerializer
-
-
-class OrganizationCreateViewSet(viewsets.ModelViewSet):
-    """Добавление организации"""
-    serializer_class = OrganizationCreateSerializer
-
-class OrganizationListView(APIView):
-    """Вывод всех организации из БД"""
-    def get(self, request):
-        organizations = Organization.objects.filter(published=True)
-        serializer = OrganizationSerializer(organizations, many=True)
-        return Response(serializer.data)
-
-
-
-class OrganizationDetailView(APIView):
-    """Для детального вывода организации"""
-    def get(self, request, pk):
-        organization = Organization.objects.get(id=pk, published=True)
-        serializer = OrganizationDetailSerializer(organization)
-        return Response(serializer.data)

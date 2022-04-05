@@ -1,28 +1,20 @@
 from rest_framework import serializers
 
-from teachers.models import TeacherProfile
+from .models import TeacherProfile
 
 
-class TeacherListSerializer(serializers.ModelSerializer):
+class TeacherSerializer(serializers.ModelSerializer):
     """Вывод всех учителей"""
-    classroom = serializers.SlugRelatedField(slug_field='name', many=True, read_only=True)
-    class Meta:
-        model = TeacherProfile
-        fields = "__all__"
 
-class TeacherDetailSerializer(serializers.ModelSerializer):
-    """Вывод всех учителей"""
-    classroom =  serializers.SlugRelatedField(slug_field='name', many=True, read_only=True)
-    subject = serializers.SlugRelatedField(slug_field='name', many=True, read_only=True)
-    parallesclass = serializers.SlugRelatedField(slug_field='name', many=True, read_only=True)
+    # user = serializers.SlugRelatedField(slug_field='username', read_only=True)
+    # organization = serializers.SlugRelatedField(slug_field='name', read_only=True)
+    # classroom = serializers.SlugRelatedField(slug_field='name', many=True, read_only=True)
+    # subject = serializers.SlugRelatedField(slug_field='name', many=True, read_only=True)
+    # parallesclass = serializers.SlugRelatedField(slug_field='name', many=True, read_only=True)
+    # language = serializers.SlugRelatedField(slug_field='name', many=True, read_only=True)
 
     class Meta:
         model = TeacherProfile
-        fields = "__all__"
+        exclude = ('created_date', 'edit_date', 'published',)
 
 
-class TeacherCreateSerializers(serializers.ModelSerializer):
-    """Добавление пос"""
-    class Meta:
-        model = TeacherProfile
-        fields = "__all__"

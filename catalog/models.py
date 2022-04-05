@@ -147,21 +147,3 @@ class ClassRoom(models.Model):
         verbose_name = "Класс"
         verbose_name_plural = "Классы"
 
-class ParallesClass(models.Model):
-    """Модель таблицы Параллель школы"""
-    name = models.CharField(_('Параллель'), max_length=100)
-    created_date = models.DateTimeField("Дата создания", auto_now_add=True, blank=True, null=True)
-    edit_date = models.DateTimeField(
-        "Дата редактирования",
-        auto_now_add=True,
-        blank=True,
-        null=True
-    )
-    published = models.BooleanField("Опубликовать?", default=True)
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name = "Параллель"
-        verbose_name_plural = "Параллели"

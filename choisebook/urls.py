@@ -18,19 +18,28 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+from .router import router
+from .yasg import urlpatterns as doc_urls
+# from rest_framework import routers
+# from alternative.views import AlternativeViewSet
+
+# router = routers.DefaultRouter()
+
 urlpatterns = [
 
     path('admin/', admin.site.urls),
     path('ckeditor/', include('ckeditor_uploader.urls')),
+    path('api/v1/', include(router.urls)),
     path('api-auth/', include('rest_framework.urls')),
-    path('api/v1/org/', include('organizations.urls', namespace='org')),
-    path('api/v1/alt/', include('alternative.urls', namespace='alt')),
-    path('api/v1/teach/', include('teachers.urls', namespace='teach')),
-    # path('org/', include('organizations.urls', namespace='org'))
 
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+urlpatterns += doc_urls
+
+
+
 admin.site.site_header = "Система выбора учебников"
 admin.site.site_title = "Администратор"
 admin.site.index_title = "Добро пожаловать в систему"

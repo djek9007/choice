@@ -3,7 +3,9 @@ from django.contrib.admin import AdminSite
 from django.contrib.auth.models import Group, User
 from django.contrib.auth.admin import GroupAdmin, UserAdmin
 # Register your models here.
-from catalog.models import Region, District, Locality, TerritorialAffiliation, Language, Subject, ClassRoom, ParallesClass
+from catalog.models import Region, District, Locality, TerritorialAffiliation, Language, Subject, ClassRoom
+from order.models import Order, StatusOrder, Comment
+from role.models import Role, RegionRole, DistrictRole, LocalityRole
 
 
 class DistrictAdmin(admin.ModelAdmin):
@@ -53,8 +55,17 @@ class SubjectAdmin(admin.ModelAdmin):
 class ClassRoomAdmin(admin.ModelAdmin):
     list_display = ('name',)
 
-class ParallesClassAdmin(admin.ModelAdmin):
+class RoleAdmin(admin.ModelAdmin):
     list_display = ('name',)
+
+class RegionRoleAdmin(admin.ModelAdmin):
+    list_display = ('user', 'role', 'region_role',)
+
+class DistrictRoleAdmin(admin.ModelAdmin):
+    list_display = ('user', 'role', 'region_role', 'district_role',)
+
+class LocalityRoleAdmin(admin.ModelAdmin):
+    list_display = ('user', 'role', 'region_role', 'district_role', 'locality_role',)
 
 
 
@@ -85,7 +96,17 @@ admin.site.register(Language, LanguageAdmin)
 
 admin.site.register(Subject, SubjectAdmin)
 admin.site.register(ClassRoom, ClassRoomAdmin)
-admin.site.register(ParallesClass, ParallesClassAdmin)
+
+
+
+
+admin.site.register(Role, RoleAdmin)
+admin.site.register(RegionRole, RegionRoleAdmin)
+admin.site.register(DistrictRole, DistrictRoleAdmin)
+admin.site.register(LocalityRole, LocalityRoleAdmin)
+admin.site.register(Order)
+admin.site.register(StatusOrder)
+admin.site.register(Comment)
 
 #Регистрируем стандартные
 admin.site.register(Group, GroupAdmin)

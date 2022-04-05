@@ -28,7 +28,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['*',]
 
 
-# Application definition
+
 
 INSTALLED_APPS = [
 
@@ -44,7 +44,10 @@ INSTALLED_APPS = [
     'teachers.apps.TeachersConfig',
     'publishingHouse.apps.PublishinghouseConfig',
     'alternative.apps.AlternativeConfig',
+    'order.apps.OrderConfig',
 
+
+    'drf_yasg',
     'crispy_forms',
     'django_cleanup.apps.CleanupConfig',
     'rest_framework',
@@ -52,8 +55,11 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
 
 
+
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+# Application definition
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -70,7 +76,8 @@ ROOT_URLCONF = 'choisebook.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR, 'templates'],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -144,7 +151,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static_origin'), ]
+STATICFILES_DIRS = [os.path.join(BASE_DIR,  'build', 'static')]
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
@@ -223,4 +230,10 @@ CKEDITOR_CONFIGS = {
             'youtube'
         ]),
     }
+}
+
+REST_FRAMEWORK = {
+
+   'DEFAULT_PERMISSION_CLASSES': ( 'rest_framework.permissions.AllowAny', ),
+
 }

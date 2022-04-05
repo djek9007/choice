@@ -1,27 +1,39 @@
-from django.shortcuts import render
-
-# Create your views here.
-from rest_framework.response import Response
-from rest_framework.views import APIView
-
-from alternative.models import Alternative
-from alternative.serializers import AlternativeCreateSerializers, AlternativeListSerializers
+from rest_framework import  viewsets, permissions
+from .models import Alternative
+from .serializers import AlternativeSerializer
 
 
+class AlternativeViewSet(viewsets.ModelViewSet):
+    serializer_class = AlternativeSerializer
+    permissions = [permissions.AllowAny]
+    queryset = Alternative.objects.filter(published=True)
 
-class AlternativeListView(APIView):
-    """Вывод всех выбранных издательств"""
+    # def get_queryset(self):
+    #     """Форма запроса из базы"""
+    #     alternative = Alternative.objects.filter(published=True)
+    #     return alternative
 
-    def get(self, request):
-        alternative = Alternative.objects.filter(published=True)
-        serializer = AlternativeListSerializers(alternative, many=True)
 
-        return Response(serializer.data)
-
-class AlternativeCreateView(APIView):
-    """Добавление выбранного алтернативного учебника"""
-    def post(self, request):
-        alternative = AlternativeCreateSerializers(data = request.data)
-        if alternative.is_valid():
-            alternative.save()
-        return  Response(status=201)
+# class AlternativeListView(generics.ListAPIView):
+#     """Вывод всех выбранных учебников"""
+#     serializer_class = AlternativeListSerializers
+#
+#     def get_queryset(self):
+#         """Форма запроса из базы"""
+#         alternative = Alternative.objects.filter(published=True)
+#         return alternative
+#
+#
+# class AlternativeCreateView(generics.CreateAPIView):
+#     """Добавление выбранного алтернативного учебника"""
+#     serializer_class = AlternativeCreateSerializers
+#
+#
+# class AlternativeDetailView(generics.RetrieveUpdateDestroyAPIView):
+#     """Вывод одного выбранного учебника, редактирование, удаление"""
+#     serializer_class = AlternativeDetailSerializer
+#
+#     def get_queryset(self):
+#         """Форма запроса из базы"""
+#         alternative = Alternative.objects.filter(published=True)
+#         return alternative
