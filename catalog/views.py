@@ -1,6 +1,25 @@
 from rest_framework import generics, permissions, viewsets
 from .models import Region, District, Locality, TerritorialAffiliation, Language, ClassRoom
 from .serializers import RegionSerializer, DistrictSerializer,  LocalitySerializer,  TerritorialAffiliationSerializer, LanguageSerializer, ClassRoomSerializer
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework_simplejwt.tokens import RefreshToken
+
+#SimpleJWT token logout
+class LogoutView(APIView):
+    permission_classes = []
+
+    def post(self, request):
+        try:
+            refresh_token = request.data["refresh"]
+            token = RefreshToken(refresh_token)
+            token.blacklist()
+            data = {"detail": "Token was deleted"}
+            return Response(data, status=status.HTTP_205_RESET_CONTENT)
+        except Exception as e:
+            data = {"detail": str(e)}
+            return Response(data, status=status.HTTP_400_BAD_REQUEST)
 
 
 class RegionViewSet(viewsets.ModelViewSet):
