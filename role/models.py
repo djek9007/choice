@@ -29,12 +29,10 @@ class RegionRole(models.Model):
     region_role = models.ForeignKey(Region, verbose_name='Выберите область/город', on_delete=models.CASCADE,
                                     related_name='region_role')
 
-    created_date = models.DateTimeField("Дата создания", auto_now_add=True, blank=True, null=True)
+    created_date = models.DateTimeField("Дата создания", auto_now_add=True)
     edit_date = models.DateTimeField(
         "Дата редактирования",
         auto_now_add=True,
-        blank=True,
-        null=True
     )
     published = models.BooleanField("Опубликовать?", default=True)
 
@@ -52,12 +50,11 @@ class DistrictRole(models.Model):
     role = models.ForeignKey(Role, verbose_name='Выберите роль администратора', on_delete=models.CASCADE, )
     region_role = models.ForeignKey(Region, verbose_name='Выберите область/город', on_delete=models.CASCADE,)
     district_role = models.ForeignKey(District, verbose_name='Выберите район', on_delete=models.CASCADE, related_name='district_role')
-    created_date = models.DateTimeField("Дата создания", auto_now_add=True, blank=True, null=True)
+    created_date = models.DateTimeField("Дата создания", auto_now_add=True)
     edit_date = models.DateTimeField(
         "Дата редактирования",
-        auto_now_add=True,
-        blank=True,
-        null=True
+        auto_now=True,
+
     )
     published = models.BooleanField("Опубликовать?", default=True)
 
@@ -76,12 +73,10 @@ class LocalityRole(models.Model):
     region_role = models.ForeignKey(Region, verbose_name='Выберите область/город', on_delete=models.CASCADE,)
     district_role = models.ForeignKey(District, verbose_name='Выберите район', on_delete=models.CASCADE)
     locality_role = models.ForeignKey(Locality, verbose_name='Выберите населенный пункт', on_delete=models.CASCADE, related_name='locality_role')
-    created_date = models.DateTimeField("Дата создания", auto_now_add=True, blank=True, null=True)
+    created_date = models.DateTimeField("Дата создания", auto_now_add=True)
     edit_date = models.DateTimeField(
         "Дата редактирования",
-        auto_now_add=True,
-        blank=True,
-        null=True
+        auto_now=True,
     )
     published = models.BooleanField("Опубликовать?", default=True)
 

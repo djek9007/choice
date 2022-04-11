@@ -13,12 +13,10 @@ class Organization(models.Model):
     language = models.ForeignKey(Language, verbose_name='Язык', on_delete=models.CASCADE)
     name = models.CharField(_('Наименование организации'), max_length=100,)
 
-    created_date = models.DateTimeField("Дата создания", auto_now_add=True, blank=True, null=True)
+    created_date = models.DateTimeField("Дата создания", auto_now_add=True)
     edit_date = models.DateTimeField(
         "Дата редактирования",
-        auto_now_add=True,
-        blank=True,
-        null=True
+        auto_now=True,
     )
     published = models.BooleanField("Опубликовать?", default=True)
 

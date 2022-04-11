@@ -9,12 +9,10 @@ from publishingHouse.models import PublishingHouse
 class StatusOrder(models.Model):
     """Модель таблицы статуса"""
     name = models.CharField(_('Статус'), max_length=100)
-    created_date = models.DateTimeField("Дата создания", auto_now_add=True, blank=True, null=True)
+    created_date = models.DateTimeField("Дата создания", auto_now_add=True)
     edit_date = models.DateTimeField(
         "Дата редактирования",
-        auto_now_add=True,
-        blank=True,
-        null=True
+        auto_now=True,
     )
     published = models.BooleanField("Опубликовать?", default=True)
 
@@ -37,12 +35,10 @@ class Order(models.Model):
     status = models.ForeignKey(StatusOrder, verbose_name='Статус', on_delete=models.CASCADE)
     sent_raiono = models.BooleanField(default=False, verbose_name='Отправить в РАЙОНО')
     sent_uoo = models.BooleanField(default=False, verbose_name='Отправить в УО')
-    created_date = models.DateTimeField("Дата создания", auto_now_add=True, blank=True, null=True)
+    created_date = models.DateTimeField("Дата создания", auto_now_add=True,)
     edit_date = models.DateTimeField(
         "Дата редактирования",
-        auto_now_add=True,
-        blank=True,
-        null=True
+        auto_now=True,
     )
     published = models.BooleanField("Опубликовать?", default=True)
     def __str__(self):
@@ -58,13 +54,11 @@ class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     text = models.TextField('Обоснование')
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='comments')
-    created_date = models.DateTimeField("Дата создания", auto_now_add=True, blank=True, null=True)
+    created_date = models.DateTimeField("Дата создания", auto_now_add=True)
 
     edit_date = models.DateTimeField(
         "Дата редактирования",
         auto_now_add=True,
-        blank=True,
-        null=True
     )
     published = models.BooleanField("Опубликовать?", default=True)
 

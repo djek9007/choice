@@ -7,12 +7,10 @@ from catalog.models import Subject, ClassRoom, Language
 
 class YearPublising(models.Model):
     name = models.CharField('Год издание', max_length=100)
-    created_date = models.DateTimeField("Дата создания", auto_now_add=True, blank=True, null=True)
+    created_date = models.DateTimeField("Дата создания", auto_now_add=True)
     edit_date = models.DateTimeField(
         "Дата редактирования",
-        auto_now_add=True,
-        blank=True,
-        null=True
+        auto_now=True,
     )
     published = models.BooleanField("Опубликовать?", default=True)
 
@@ -26,12 +24,10 @@ class YearPublising(models.Model):
 
 class PublishingHouse(models.Model):
     name = models.CharField('Издательство', max_length=100)
-    created_date = models.DateTimeField("Дата создания", auto_now_add=True, blank=True, null=True)
+    created_date = models.DateTimeField("Дата создания", auto_now_add=True)
     edit_date = models.DateTimeField(
         "Дата редактирования",
-        auto_now_add=True,
-        blank=True,
-        null=True
+        auto_now=True,
     )
     published = models.BooleanField("Опубликовать?", default=True)
 
@@ -48,12 +44,11 @@ class TextBook(models.Model):
     classroom = models.ForeignKey(ClassRoom, verbose_name='Класс', on_delete=models.CASCADE)
     yearPublishing = models.ForeignKey(YearPublising, verbose_name='Год издание', on_delete=models.CASCADE)
     language = models.ForeignKey(Language, verbose_name='Язык', on_delete=models.CASCADE)
-    created_date = models.DateTimeField("Дата создания", auto_now_add=True, blank=True, null=True)
+    created_date = models.DateTimeField("Дата создания", auto_now_add=True)
     edit_date = models.DateTimeField(
         "Дата редактирования",
-        auto_now_add=True,
-        blank=True,
-        null=True
+        auto_now=True,
+
     )
     published = models.BooleanField("Опубликовать?", default=True)
     description = models.TextField(verbose_name='Описание', blank=True, null=True)

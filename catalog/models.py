@@ -5,12 +5,10 @@ from django.utils.translation import gettext_lazy as _
 class Region(models.Model):
     """Модель таблицы области"""
     name = models.CharField(_('Область/город'), max_length=100)
-    created_date = models.DateTimeField("Дата создания", auto_now_add=True, blank=True, null=True)
+    created_date = models.DateTimeField("Дата создания", auto_now_add=True)
     edit_date = models.DateTimeField(
         "Дата редактирования",
-        auto_now_add=True,
-        blank=True,
-        null=True
+        auto_now=True,
     )
     published = models.BooleanField("Опубликовать?", default=True)
 
@@ -28,12 +26,10 @@ class District(models.Model):
     """Модель таблицы Района"""
     region = models.ForeignKey(Region, verbose_name='Область/город', on_delete=models.CASCADE)
     name = models.CharField(_('Район'), max_length=100)
-    created_date = models.DateTimeField("Дата создания", auto_now_add=True, blank=True, null=True)
+    created_date = models.DateTimeField("Дата создания", auto_now_add=True)
     edit_date = models.DateTimeField(
         "Дата редактирования",
-        auto_now_add=True,
-        blank=True,
-        null=True
+        auto_now=True,
     )
     published = models.BooleanField("Опубликовать?", default=True)
 
@@ -50,12 +46,10 @@ class Locality(models.Model):
     region = models.ForeignKey(Region, verbose_name='Область/город', on_delete=models.CASCADE)
     district = models.ForeignKey(District, verbose_name='Район', on_delete=models.CASCADE)
     name = models.CharField(_('Населенный пункт'), max_length=100)
-    created_date = models.DateTimeField("Дата создания", auto_now_add=True, blank=True, null=True)
+    created_date = models.DateTimeField("Дата создания", auto_now_add=True)
     edit_date = models.DateTimeField(
         "Дата редактирования",
-        auto_now_add=True,
-        blank=True,
-        null=True
+        auto_now=True,
     )
     published = models.BooleanField("Опубликовать?", default=True)
 
@@ -70,12 +64,10 @@ class TerritorialAffiliation(models.Model):
     """Модель таблицы территориальная принадлежность город село"""
 
     name = models.CharField(_('Область'), max_length=100, unique=True)
-    created_date = models.DateTimeField("Дата создания", auto_now_add=True, blank=True, null=True)
+    created_date = models.DateTimeField("Дата создания", auto_now_add=True)
     edit_date = models.DateTimeField(
         "Дата редактирования",
-        auto_now_add=True,
-        blank=True,
-        null=True
+        auto_now=True,
     )
     published = models.BooleanField("Опубликовать?", default=True)
 
@@ -89,12 +81,10 @@ class TerritorialAffiliation(models.Model):
 class Language(models.Model):
     """Таблица языков"""
     name = models.CharField(_('Язык'), max_length=100)
-    created_date = models.DateTimeField("Дата создания", auto_now_add=True, blank=True, null=True)
+    created_date = models.DateTimeField("Дата создания", auto_now_add=True)
     edit_date = models.DateTimeField(
         "Дата редактирования",
-        auto_now_add=True,
-        blank=True,
-        null=True
+        auto_now=True,
     )
     published = models.BooleanField("Опубликовать?", default=True)
 
@@ -111,12 +101,10 @@ class Subject(models.Model):
     """Модель таблицы предметов Геометрия, математика итд"""
     language = models.ForeignKey(Language, verbose_name='Язык обучение', on_delete=models.CASCADE)
     name = models.CharField(_('Наименование предмета'), max_length=100)
-    created_date = models.DateTimeField("Дата создания", auto_now_add=True, blank=True, null=True)
+    created_date = models.DateTimeField("Дата создания", auto_now_add=True)
     edit_date = models.DateTimeField(
         "Дата редактирования",
-        auto_now_add=True,
-        blank=True,
-        null=True
+        auto_now=True,
     )
     published = models.BooleanField("Опубликовать?", default=True)
 
@@ -131,12 +119,10 @@ class Subject(models.Model):
 class ClassRoom(models.Model):
     """Модель таблицы класса от 1 до 11 класс"""
     name = models.CharField(_('Класс'), max_length=100)
-    created_date = models.DateTimeField("Дата создания", auto_now_add=True, blank=True, null=True)
+    created_date = models.DateTimeField("Дата создания", auto_now_add=True)
     edit_date = models.DateTimeField(
         "Дата редактирования",
-        auto_now_add=True,
-        blank=True,
-        null=True
+        auto_now=True,
     )
     published = models.BooleanField("Опубликовать?", default=True)
 
