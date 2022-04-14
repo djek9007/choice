@@ -1,21 +1,33 @@
 from rest_framework import serializers
 from .models import Region, District, Locality, TerritorialAffiliation, Language, ClassRoom
 
-
-class RegionSerializer(serializers.ModelSerializer):
-    """Сериалайзер для модели Область/город"""
-    class Meta:
-        model = Region
-        fields = ('name',)
-
-
 class DistrictSerializer(serializers.ModelSerializer):
     """Сериалайзер для модели Района"""
-    region = serializers.SlugRelatedField(slug_field='name', read_only=True)
+    group_by_locality = serializers.SerializerMethodField()
 
     class Meta:
         model = District
-        fields = ('id', 'name', 'region',)
+        fields = ['id', 'name', 'region', 'group_by_locality', ]
+
+    def get_group_by_locality(self, instance):
+        locality = Locality.objects.order_by('name').filter(district=instance)
+        return LocalitySerializer(locality, many=True).data
+
+class RegionSerializer(serializers.ModelSerializer):
+    """Сериалайзер для модели Область/город"""
+    group_by_districts = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Region
+        fields = ['id','name', 'group_by_districts',]
+
+    def get_group_by_districts(self, instance):
+        district = District.objects.order_by('name').filter(region=instance)
+        return DistrictSerializer(district, many=True).data
+
+
+
+
 
 
 class LocalitySerializer(serializers.ModelSerializer):

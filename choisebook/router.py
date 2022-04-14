@@ -10,6 +10,7 @@ from teachers.views import TeacherViewSet
 
 router = routers.DefaultRouter()
 
+
 #app organizations
 router.register('organization', OrganizationsViewSet)
 
@@ -17,22 +18,23 @@ router.register('organization', OrganizationsViewSet)
 router.register('alternative', AlternativeViewSet)
 
 #app catalog
-router.register('region', RegionViewSet)
-router.register('district', DistrictViewSet)
+router.register('region', RegionViewSet, basename='regions')
+router.register('district', DistrictViewSet, basename='district')
+
 router.register('locality', LocalityViewSet)
 router.register('territorial', TerritorialAffiliationViewSet)
 router.register('language', LanguageViewSet)
 router.register('classroom', ClassRoomView)
-
-#app publishingHouse
+#
+# #app publishingHouse
 router.register('pubhouse', PublishingHouseViewSet)
 router.register('textbook', TextBookViewSet)
 router.register('yearpub', YearPublishingViewSet)
-
-#app order
+#
+# #app order
 router.register('order', OrderViewSet)
 router.register('status', StatusOrderViewSet)
 router.register('comment', CommentViewSet)
-
-#app teachers
+#
+# #app teachers
 router.register('teacher', TeacherViewSet)

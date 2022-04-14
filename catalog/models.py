@@ -44,7 +44,7 @@ class District(models.Model):
 class Locality(models.Model):
     """Модель таблицы населенного пункта"""
     region = models.ForeignKey(Region, verbose_name='Область/город', on_delete=models.CASCADE)
-    district = models.ForeignKey(District, verbose_name='Район', on_delete=models.CASCADE)
+    district = models.ForeignKey(District, verbose_name='Район', on_delete=models.CASCADE, related_name='district_locality')
     name = models.CharField(_('Населенный пункт'), max_length=100)
     created_date = models.DateTimeField("Дата создания", auto_now_add=True)
     edit_date = models.DateTimeField(

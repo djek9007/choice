@@ -48,17 +48,21 @@ INSTALLED_APPS = [
     'order.apps.OrderConfig',
     'role.apps.RoleConfig',
 
-
+    'django_filters',
     'drf_yasg',
     'crispy_forms',
     'django_cleanup.apps.CleanupConfig',
     'rest_framework',
+    'rest_framework_simplejwt',
     'ckeditor',
     'ckeditor_uploader',
+    'corsheaders',
 
 
 
 ]
+CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_WHITELIST = ["http://localhost:8080"]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 # Application definition
 
@@ -266,11 +270,17 @@ SIMPLE_JWT = {
 }
 
 REST_FRAMEWORK = {
-
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+),
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        "rest_framework_simplejwt.authentication.JWTAuthentication",
-        "rest_framework.authentication.BasicAuthentication",
-        "rest_framework.authentication.SessionAuthentication",
-    )
-
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    'DEFAULT_FILTER_BACKENDS': (
+        'django_filters.rest_framework.DjangoFilterBackend',
+    ),
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10
 }
