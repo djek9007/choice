@@ -1,72 +1,9 @@
 from django.contrib import admin
 from django.contrib.admin import AdminSite
-from django.contrib.auth.models import Group, User
-from django.contrib.auth.admin import GroupAdmin, UserAdmin
-# Register your models here.
+from import_export.admin import ImportExportActionModelAdmin, ImportExportModelAdmin
+
 from catalog.models import Region, District, Locality, TerritorialAffiliation, Language, Subject, ClassRoom
-from order.models import Order, StatusOrder, Comment
-from role.models import Role, RegionRole, DistrictRole, LocalityRole
-
-
-class DistrictAdmin(admin.ModelAdmin):
-    save_on_top = True
-    list_display = ['id', 'name', 'region',  ]
-    actions = ['unpublish', 'publish', ]
-    list_display_links = ("name",)
-
-    # readonly_fields = ('published',)
-    exclude = ('edit_date',)
-
-    list_filter = ('region',)
-
-    list_per_page = 20
-
-class RegionAdmin(admin.ModelAdmin):
-    save_on_top = True
-    list_display = ['id', 'name', 'published', ]
-
-    list_display_links = ("name",)
-
-    exclude = ('edit_date',)
-    # readonly_fields = ('published',)
-
-    list_per_page = 20
-
-
-class LanguageAdmin(admin.ModelAdmin):
-    exclude = ('edit_date',)
-
-
-
-class LocalityAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'region', 'district', 'published', ]
-    exclude = ('edit_date',)
-    list_display_links = ('name',)
-
-
-class TerritorialAffiliationAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'published', ]
-    exclude = ('edit_date',)
-
-class SubjectAdmin(admin.ModelAdmin):
-    list_display = ['name', 'language']
-    list_filter = ('language',)
-
-class ClassRoomAdmin(admin.ModelAdmin):
-    list_display = ('name',)
-
-class RoleAdmin(admin.ModelAdmin):
-    list_display = ('name',)
-
-class RegionRoleAdmin(admin.ModelAdmin):
-    list_display = ('user', 'role', 'region_role',)
-
-class DistrictRoleAdmin(admin.ModelAdmin):
-    list_display = ('user', 'role', 'region_role', 'district_role',)
-
-class LocalityRoleAdmin(admin.ModelAdmin):
-    list_display = ('user', 'role', 'region_role', 'district_role', 'locality_role',)
-
+from catalog.resources import RegionResource, DistrictResource, LocalityResource
 
 
 class MyAdminSite(AdminSite):
@@ -87,27 +24,73 @@ class MyAdminSite(AdminSite):
 
         return app_list
 
-admin.site = MyAdminSite()
-admin.site.register(Region, RegionAdmin)
-admin.site.register(District, DistrictAdmin)
-admin.site.register(Locality, LocalityAdmin)
-admin.site.register(TerritorialAffiliation, TerritorialAffiliationAdmin)
-admin.site.register(Language, LanguageAdmin)
 
-admin.site.register(Subject, SubjectAdmin)
-admin.site.register(ClassRoom, ClassRoomAdmin)
+@admin.register(Region)
+class RegionAdmin(ImportExportActionModelAdmin,ImportExportModelAdmin, admin.ModelAdmin):
+    search_fields = ("name",)
+    save_on_top = True
+    list_display = ['id', 'name', 'published', ]
+    resource_class = RegionResource
+    list_display_links = ("name",)
+
+    exclude = ('edit_date',)
+    # readonly_fields = ('published',)
+
+    list_per_page = 20
+
+@admin.register(District)
+class DistrictAdmin(ImportExportActionModelAdmin, ImportExportModelAdmin, admin.ModelAdmin):
+    resource_class = DistrictResource
+    search_fields = ("name",)
+    save_on_top = True
+    list_display = ['id', 'name', 'region', ]
+    actions = ['unpublish', 'publish', ]
+    list_display_links = ("name",)
+
+    # readonly_fields = ('published',)
+    exclude = ('edit_date',)
+
+    list_filter = ('region',)
+
+    list_per_page = 20
 
 
+@admin.register(Locality)
+class LocalityAdmin(ImportExportActionModelAdmin, ImportExportModelAdmin, admin.ModelAdmin):
+    list_display = ['id', 'name', 'region', 'district', 'published', ]
+    resource_class = LocalityResource
+    list_filter = ['region', 'district',]
+    exclude = ('edit_date',)
+    list_display_links = ('name',)
+    search_fields = ("name",)
+    save_on_top = True
 
 
-admin.site.register(Role, RoleAdmin)
-admin.site.register(RegionRole, RegionRoleAdmin)
-admin.site.register(DistrictRole, DistrictRoleAdmin)
-admin.site.register(LocalityRole, LocalityRoleAdmin)
-admin.site.register(Order)
-admin.site.register(StatusOrder)
-admin.site.register(Comment)
+@admin.register(TerritorialAffiliation)
+class TerritorialAffiliationAdmin(admin.ModelAdmin):
+    list_display = ['id', 'name', 'published', ]
+    exclude = ('edit_date',)
+    search_fields = ("name",)
+    save_on_top = True
 
-#Регистрируем стандартные
-admin.site.register(Group, GroupAdmin)
-admin.site.register(User, UserAdmin)
+@admin.register(Language)
+class LanguageAdmin(admin.ModelAdmin):
+    exclude = ('edit_date',)
+    search_fields = ("name",)
+    save_on_top = True
+
+@admin.register(Subject)
+class SubjectAdmin(admin.ModelAdmin):
+    list_display = ['name', 'language']
+    list_filter = ('language',)
+    search_fields = ("name",)
+    save_on_top = True
+
+
+@admin.register(ClassRoom)
+class ClassRoomAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+    search_fields = ("name",)
+    save_on_top = True
+
+

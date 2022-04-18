@@ -11,7 +11,7 @@ from organizations.models import Organization
 class Role(models.Model):
     """Таблица ролей"""
     name = models.CharField(_('Наименование ролей'), max_length=100,)
-
+    published = models.BooleanField("Опубликовать?", default=True)
     def __str__(self):
         return self.name
 
@@ -66,13 +66,14 @@ class DistrictRole(models.Model):
         verbose_name_plural = "Администраторы района"
 
 
-class LocalityRole(models.Model):
+class OrganizationRole(models.Model):
     """Таблица роли для администраторов населенного пункта"""
     user = models.ForeignKey(User, verbose_name='Пользователь', on_delete=models.CASCADE)
     role = models.ForeignKey(Role, verbose_name='Выберите роль администратора', on_delete=models.CASCADE, )
     region_role = models.ForeignKey(Region, verbose_name='Выберите область/город', on_delete=models.CASCADE,)
     district_role = models.ForeignKey(District, verbose_name='Выберите район', on_delete=models.CASCADE)
     locality_role = models.ForeignKey(Locality, verbose_name='Выберите населенный пункт', on_delete=models.CASCADE, related_name='locality_role')
+    organizations = models.ForeignKey(Organization, verbose_name="Выберите организацию", on_delete=models.CASCADE)
     created_date = models.DateTimeField("Дата создания", auto_now_add=True)
     edit_date = models.DateTimeField(
         "Дата редактирования",
@@ -84,8 +85,8 @@ class LocalityRole(models.Model):
         return self.role.name
 
     class Meta:
-        verbose_name = "Администраторы населенного пункта"
-        verbose_name_plural = "Администраторы населенного пункта"
+        verbose_name = "Администраторы организации"
+        verbose_name_plural = "Администраторы организации"
 
 
 

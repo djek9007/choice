@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from .models import Region, District, Locality, TerritorialAffiliation, Language, ClassRoom
+from catalog.models import Region, District, Locality, TerritorialAffiliation, Language, ClassRoom, Subject
+
 
 class DistrictSerializer(serializers.ModelSerializer):
     """Сериалайзер для модели Района"""
@@ -13,9 +14,11 @@ class DistrictSerializer(serializers.ModelSerializer):
         locality = Locality.objects.order_by('name').filter(district=instance)
         return LocalitySerializer(locality, many=True).data
 
+
 class RegionSerializer(serializers.ModelSerializer):
     """Сериалайзер для модели Область/город"""
     group_by_districts = serializers.SerializerMethodField()
+
 
     class Meta:
         model = Region
@@ -24,10 +27,6 @@ class RegionSerializer(serializers.ModelSerializer):
     def get_group_by_districts(self, instance):
         district = District.objects.order_by('name').filter(region=instance)
         return DistrictSerializer(district, many=True).data
-
-
-
-
 
 
 class LocalitySerializer(serializers.ModelSerializer):
@@ -60,3 +59,11 @@ class ClassRoomSerializer(serializers.ModelSerializer):
     class Meta:
         model = ClassRoom
         fields = ('id', 'name',)
+
+
+class SubjectSerializer(serializers.ModelSerializer):
+    """Сериалайзер для модели предметов"""
+
+    class Meta:
+        model = Subject
+        fields = ('id', 'name', 'language',)

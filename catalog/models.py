@@ -63,7 +63,7 @@ class Locality(models.Model):
 class TerritorialAffiliation(models.Model):
     """Модель таблицы территориальная принадлежность город село"""
 
-    name = models.CharField(_('Область'), max_length=100, unique=True)
+    name = models.CharField(_('Вид территориальной принадлежности'), max_length=100, unique=True)
     created_date = models.DateTimeField("Дата создания", auto_now_add=True)
     edit_date = models.DateTimeField(
         "Дата редактирования",

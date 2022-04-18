@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'order.apps.OrderConfig',
     'role.apps.RoleConfig',
 
+    'import_export',
     'django_filters',
     'drf_yasg',
     'crispy_forms',
@@ -66,7 +67,7 @@ CORS_ORIGIN_WHITELIST = ["http://localhost:8080"]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 # Application definition
 
-
+IMPORT_EXPORT_USE_TRANSACTIONS =True
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
